@@ -8,6 +8,6 @@ class Player {
   }
 
   hasBusted(): boolean {
-    // Logic to determine if the player has busted.
+    return this.hand.calculateScore() > 21;
   }
 }
