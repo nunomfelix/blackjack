@@ -8,30 +8,39 @@ import {
   Delete,
 } from '@nestjs/common';
 import { GameService } from './game.service';
-import { CreateGameDto } from './dto/create-game.dto';
-import { UpdateGameDto } from './dto/update-game.dto';
+import GameState from './interfaces/gamestate.interface';
 
 @Controller('game')
 export class GameController {
   constructor(private readonly gameService: GameService) {}
 
-  @Post('start')
-  async start(@Body() createGameDto: CreateGameDto) {
-    return await this.gameService.start(createGameDto);
+  @Get()
+  async getGameState(): Promise<GameState> {
+    return this.gameService.getGameState();
   }
 
-  @Post('turn')
-  async turn() {
-    return await this.gameService.turn();
+  @Post('/start')
+  async startGame(): Promise<GameState> {
+    return this.gameService.startGame();
   }
 
-  @Get('state')
-  async state() {
-    return await this.gameService.state();
+  @Post('/playerTurn')
+  async playerTurn(): Promise<GameState> {
+    return this.gameService.playerTurn();
   }
 
-  @Post('end')
-  async end() {
-    return await this.gameService.end();
+  @Post('/dealerTurn')
+  async dealerTurn(): Promise<GameState> {
+    return this.gameService.dealerTurn();
+  }
+
+  @Get('/winner')
+  async determineWinner(): Promise<GameState> {
+    return this.gameService.determineWinner();
+  }
+
+  @Post('/reset')
+  async resetGame(): Promise<GameState> {
+    return this.gameService.resetGame();
   }
 }
