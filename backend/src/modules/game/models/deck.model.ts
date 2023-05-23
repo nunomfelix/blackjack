@@ -1,4 +1,6 @@
-class Deck {
+import { Card } from './card.model';
+
+export class Deck {
   cards: Card[];
 
   constructor() {

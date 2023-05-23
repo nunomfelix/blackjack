@@ -1,3 +1,4 @@
+import { Card } from '../models/card.model';
 import { GameStatus } from '../models/game.model';
 
 export interface GameState {

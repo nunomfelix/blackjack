@@ -7,7 +7,8 @@ export class GameService {
   private game: Game;
 
   constructor() {
-    this.game = new Game();
+    // we can initialize with any arbitrary bet
+    this.game = new Game(0);
   }
 
   async getGameState(): Promise<GameState> {
@@ -30,16 +31,32 @@ export class GameService {
     };
   }
 
-  async startGame(): Promise<GameState> {
+  async startGame(playerBet: number): Promise<GameState> {
+    this.game.resetGame(playerBet);
     this.game.startGame();
     return this.getGameState();
   }
 
-  async playerTurn(): Promise<GameState> {
-    this.game.playerTurn();
+  async playerHit(): Promise<GameState> {
+    this.game.playerHit();
     if (this.game.status === GameStatus.PlayerBusted) {
       this.game.dealerTurn();
     }
+    return this.getGameState();
+  }
+
+  async playerStand(): Promise<GameState> {
+    this.game.playerStand();
+    return this.getGameState();
+  }
+
+  async playerDoubleDown(): Promise<GameState> {
+    this.game.playerDoubleDown();
+    return this.getGameState();
+  }
+
+  async playerSplit(): Promise<GameState> {
+    this.game.playerSplit();
     return this.getGameState();
   }
 
@@ -57,7 +74,7 @@ export class GameService {
   }
 
   async resetGame(): Promise<GameState> {
-    this.game.resetGame();
+    this.game.resetGame(0); // we can reset with any arbitrary bet
     return this.getGameState();
   }
 }

@@ -20,10 +20,10 @@ async function bootstrap(): Promise<NestExpressApplication> {
   app.use(helmet());
 
   const config = new DocumentBuilder()
-    .setTitle('Airport AI Exercise')
-    .setDescription('Airport AI description')
+    .setTitle('Blackjack Backend')
+    .setDescription('Blackjack backend description')
     .setVersion('1.0')
-    .addTag('airportai')
+    .addTag('blackjack')
     .build();
 
   const document = SwaggerModule.createDocument(app, config);

@@ -1,4 +1,7 @@
 import { IGame } from '../interfaces/game.interface';
+import { Deck } from './deck.model';
+import { Player } from './player.model';
+import { Hand } from './hand.model';
 
 export enum GameStatus {
   NotStarted = 'Game has not started',
@@ -19,14 +22,14 @@ export class Game implements IGame {
   turn: 'player' | 'dealer';
   status: GameStatus;
 
-  constructor() {
-    this.resetGame();
+  constructor(playerBet: number) {
+    this.resetGame(playerBet);
   }
 
-  resetGame(): void {
+  resetGame(playerBet: number): void {
     this.deck = new Deck();
-    this.player = new Player();
-    this.dealer = new Player(true);
+    this.player = new Player(playerBet);
+    this.dealer = new Player(playerBet, true); // dealer doesn't bet, so it doesn't matter
     this.turn = 'player';
     this.status = GameStatus.NotStarted;
   }
@@ -41,13 +44,36 @@ export class Game implements IGame {
     this.status = GameStatus.Started;
   }
 
-  playerTurn(): void {
-    this.player.hand.addCard(this.deck.dealCard());
-    if (this.player.hasBusted()) {
+  playerHit(hand: Hand = this.player.hand): void {
+    hand.addCard(this.deck.dealCard());
+    if (this.player.hasBusted(hand)) {
       this.status = GameStatus.PlayerBusted;
       this.turn = 'dealer';
+      this.dealerTurn();
+    }
+  }
+
+  playerStand(): void {
+    this.turn = 'dealer';
+    this.status = GameStatus.DealerTurn;
+    this.dealerTurn();
+  }
+
+  playerDoubleDown(): void {
+    if (this.turn === 'player') {
+      this.player.doubleBet();
+      this.playerHit();
     } else {
-      this.status = GameStatus.PlayerTurn;
+      throw new Error("Can't double down: not player's turn");
+    }
+  }
+
+  playerSplit(): void {
+    if (this.turn === 'player') {
+      this.player.split();
+      this.playerHit();
+    } else {
+      throw new Error("Can't split: not player's turn");
     }
   }
 
@@ -60,7 +86,7 @@ export class Game implements IGame {
     } else {
       this.status = GameStatus.DealerTurn;
     }
-    this.turn = 'player';
+    this.determineWinner();
   }
 
   determineWinner(): string {

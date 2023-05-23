@@ -1,14 +1,6 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Patch,
-  Param,
-  Delete,
-} from '@nestjs/common';
+import { Controller, Get, Post, Body } from '@nestjs/common';
 import { GameService } from './game.service';
-import GameState from './interfaces/gamestate.interface';
+import { GameState } from './interfaces/gamestate.interface';
 
 @Controller('game')
 export class GameController {
@@ -19,27 +11,42 @@ export class GameController {
     return this.gameService.getGameState();
   }
 
-  @Post('/start')
-  async startGame(): Promise<GameState> {
-    return this.gameService.startGame();
+  @Post('start')
+  async startGame(@Body('playerBet') playerBet: number): Promise<GameState> {
+    return this.gameService.startGame(playerBet);
   }
 
-  @Post('/playerTurn')
-  async playerTurn(): Promise<GameState> {
-    return this.gameService.playerTurn();
+  @Post('playerHit')
+  async playerHit(): Promise<GameState> {
+    return this.gameService.playerHit();
   }
 
-  @Post('/dealerTurn')
+  @Post('playerStand')
+  async playerStand(): Promise<GameState> {
+    return this.gameService.playerStand();
+  }
+
+  @Post('playerDoubleDown')
+  async playerDoubleDown(): Promise<GameState> {
+    return this.gameService.playerDoubleDown();
+  }
+
+  @Post('playerSplit')
+  async playerSplit(): Promise<GameState> {
+    return this.gameService.playerSplit();
+  }
+
+  @Post('dealerTurn')
   async dealerTurn(): Promise<GameState> {
     return this.gameService.dealerTurn();
   }
 
-  @Get('/winner')
+  @Get('winner')
   async determineWinner(): Promise<GameState> {
     return this.gameService.determineWinner();
   }
 
-  @Post('/reset')
+  @Post('reset')
   async resetGame(): Promise<GameState> {
     return this.gameService.resetGame();
   }
