@@ -1,5 +1,6 @@
 <template>
   <div class="button-17"
+  @click="doAction"
   >
     {{ buttons[action] }}
   </div>
@@ -35,6 +36,7 @@ export default {
   },
   methods: {
     doAction () {
+      console.log(this.action)
       if (this.isEnabled) this.$store.dispatch(this.action, {})
     }
   }

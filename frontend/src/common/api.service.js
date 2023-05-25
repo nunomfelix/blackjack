@@ -46,11 +46,24 @@ const ApiService = {
 export default ApiService;
 
 export const GameService = {
-  get(slug) {
-    return ApiService.get('game', slug);
+  startNewGame(params) {
+    return ApiService.post('game/start', params);
   },
 
-  startNewGame(params) {
-    return ApiService.post('game/start', params)
+  playerHit(params) {
+    return ApiService.post('game/playerHit', params);
+  },
+
+  playerStand(params) {
+    return ApiService.post('game/playerStand', params);
+  },
+
+  playerSplit(params) {
+    return ApiService.post('game/playerSplit', params);
+  },
+
+  playerDoubleDown(params) {
+    return ApiService.post('game/playerDoubleDown', params);
   }
+
 }

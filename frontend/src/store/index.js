@@ -6,6 +6,8 @@ const state = {
   isLoading: true,
   dealerHand: [],
   playerHand: [],
+  status: null,
+  score: {},
   turn: null,
   settings: {
     deckCount: 6,

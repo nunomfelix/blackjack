@@ -13,4 +13,26 @@ export default {
       //commit('setGameState', {})
     }
   },
+
+  async hit ({ commit, dispatch }){
+    const { data } = await GameService.playerHit();
+    console.log(data);
+    commit('setGameState', data)
+  },
+
+  async stand ({ commit, dispatch }){
+    const { data } = await GameService.playerStand();
+    commit('setGameState', data)
+  },
+
+  async split ({ commit, dispatch }){
+    const { data } = await GameService.playerSplit();
+    console.log(data);
+    commit('setGameState', data)
+  },
+
+  async doubleDown ({ commit, dispatch }){
+    const { data } = await GameService.playerDoubleDown();
+    commit('setGameState', data)
+  }
 }

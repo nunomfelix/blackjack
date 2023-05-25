@@ -41,11 +41,28 @@ export class Game implements IGame {
     this.dealer.hand.addCard(this.deck.dealCard());
     this.dealer.hand.addCard(this.deck.dealCard());
 
-    this.status = GameStatus.Started;
+    if (
+      this.player.hand.calculateScore() === 21 &&
+      this.dealer.hand.calculateScore() === 21
+    ) {
+      this.status = GameStatus.Tie;
+    } else if (this.player.hand.calculateScore() === 21) {
+      this.status = GameStatus.PlayerWins;
+    } else if (this.dealer.hand.calculateScore() === 21) {
+      this.status = GameStatus.DealerWins;
+    } else {
+      this.status = GameStatus.Started;
+    }
   }
 
   playerHit(hand: Hand = this.player.hand): void {
     hand.addCard(this.deck.dealCard());
+
+    if (hand.calculateScore() === 21) {
+      this.status = GameStatus.PlayerWins;
+      return;
+    }
+
     if (this.player.hasBusted(hand)) {
       this.status = GameStatus.PlayerBusted;
       this.turn = 'dealer';

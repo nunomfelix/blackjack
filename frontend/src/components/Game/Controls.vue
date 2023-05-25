@@ -1,35 +1,21 @@
 <template>
   <div class="controls-row">
     <div class="controls">
-      <!-- <GameButton
+      <GameButton
         action="doubleDown"
-        :is-enabled="canDoubleDown && isPlayerTurn"
+        :isEnabled="isPlayerTurn"
       />
       <GameButton
         action="split"
-        :is-enabled="canSplit && isPlayerTurn"
+        :isEnabled="isPlayerTurn"
       />
-      <TheBank />
       <GameButton
         action="stand"
-        :is-enabled="isPlayerTurn"
+        :isEnabled="isPlayerTurn"
       />
       <GameButton
         action="hit"
-        :is-enabled="isPlayerTurn"
-      /> -->
-      <GameButton
-        action="doubleDown"
-      />
-      <GameButton
-        action="split"
-      />
-      <!-- <Bank /> -->
-      <GameButton
-        action="stand"
-      />
-      <GameButton
-        action="hit"
+        :isEnabled="isPlayerTurn"
       />
     </div>
   </div>
@@ -45,9 +31,10 @@ export default {
     GameButton
   },
   computed: {
-    // isPlayerTurn () {
-    //   return !this.isDealing && this.activeHandIndex > 0
-    // },
+    isPlayerTurn () {
+      return true;
+      //return !this.isDealing && this.activeHandIndex > 0
+    },
     // ...mapState([
     //   'isDealing',
     //   'activeHandIndex'

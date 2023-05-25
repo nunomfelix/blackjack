@@ -1,6 +1,7 @@
 <template>
   <div
     class="game-hand"
+    :class= "handClasses"
   >
     <transition-group name="deal" tag="div" class="cards">
         <div v-for="(card,i) in hand" :key="i">
@@ -8,19 +9,20 @@
           <img v-else class="card-image" :src="this.getImageUrl(card.value, card.suit)"/>
         </div>
     </transition-group>
-    <!-- <HandTotal :index="index" />
-    <HandBet :hand="hand" />
-    <HandResult :result="toResultString(hand.result)" /> -->
+    <HandTotal :score="score" />
   </div>
 </template>
 
 <script>
+import HandTotal from '@/components/Game/HandTotal.vue';
+
 export default {
   components: {
+    HandTotal
   },
   props: {
     hand: { required: true },
-    // index: { required:true }
+    score: { required: true}
   },
   data() {
     return {
@@ -33,14 +35,26 @@ export default {
     };
   },
   computed: {
+    handClasses () {
+      let classes = []
+  
+      if (this.$store.state.turn === 'player') {
+        classes.push('is-active');
+      } else {
+        classes.push('is-inactive');
+      }
+
+      if (this.$store.state.turn === 'player') {
+        classes.push('is-dealer');
+      } 
+    },
     getImageUrl() {
       return (value, suit) => {
         const cardValue = value === '10' ? '0' : value;
         return `https://deckofcardsapi.com/static/img/${cardValue}${this.suit[suit]}.png`;
       };
     },
-  }
-
+  },
 }
 </script>
 
