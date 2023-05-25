@@ -5,7 +5,7 @@
   >
     <transition-group name="deal" tag="div" class="cards">
         <div v-for="(card,i) in hand" :key="i">
-          <img v-if="card.hidden" class="card-image hidden-card" src="../../assets/card-back.png"/>
+          <img v-if="card.hidden" class="card-image hidden-card" src="/cards/card-back.png"/>
           <img v-else class="card-image" :src="this.getImageUrl(card.value, card.suit)"/>
         </div>
     </transition-group>
@@ -51,7 +51,7 @@ export default {
     getImageUrl() {
       return (value, suit) => {
         const cardValue = value === '10' ? '0' : value;
-        return `https://deckofcardsapi.com/static/img/${cardValue}${this.suit[suit]}.png`;
+        return `/cards/${cardValue}${this.suit[suit]}.png`;
       };
     },
   },
