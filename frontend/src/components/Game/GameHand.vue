@@ -9,7 +9,7 @@
           <img v-else class="card-image" :src="this.getImageUrl(card.value, card.suit)"/>
         </div>
     </transition-group>
-    <HandTotal :score="score" />
+    <HandTotal v-if="showHandTotal" :score="score" />
   </div>
 </template>
 
@@ -44,7 +44,7 @@ export default {
         classes.push('is-inactive');
       }
 
-      if (this.$store.state.turn === 'player') {
+      if (this.$store.state.turn === 'dealer') {
         classes.push('is-dealer');
       } 
     },
@@ -54,6 +54,9 @@ export default {
         return `/cards/${cardValue}${this.suit[suit]}.png`;
       };
     },
+    showHandTotal() {
+      return !this.hand.some(card => card.hidden);
+    }
   },
 }
 </script>

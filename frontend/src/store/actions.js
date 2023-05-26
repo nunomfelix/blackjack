@@ -16,7 +16,6 @@ export default {
 
   async hit ({ commit, dispatch }){
     const { data } = await GameService.playerHit();
-    console.log(data);
     commit('setGameState', data)
   },
 
@@ -27,7 +26,6 @@ export default {
 
   async split ({ commit, dispatch }){
     const { data } = await GameService.playerSplit();
-    console.log(data);
     commit('setGameState', data)
   },
 

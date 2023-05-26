@@ -1,14 +1,14 @@
 <template>
   <div class="controls-row">
     <div class="controls">
-      <GameButton
+      <!-- <GameButton
         action="doubleDown"
         :isEnabled="isPlayerTurn"
       />
       <GameButton
         action="split"
         :isEnabled="isPlayerTurn"
-      />
+      /> -->
       <GameButton
         action="stand"
         :isEnabled="isPlayerTurn"

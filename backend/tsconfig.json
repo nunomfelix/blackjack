@@ -17,7 +17,8 @@
     "outDir": "./dist",
     "baseUrl": "./src",
     "incremental": true,
-    "strictNullChecks": false
+    "strictNullChecks": false,
+    "types": ["jest", "node"]
   },
   "include": [
     "src/**/*"

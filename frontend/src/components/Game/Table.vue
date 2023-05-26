@@ -49,7 +49,6 @@ export default {
   watch: {
     status(newStatus) {
       if (this.statusList.includes(newStatus)) {
-        console.log('entrei aqui')
         setTimeout(() => {
           this.$store.dispatch('startNewGame');
         }, 5000); // Delay before starting new game
